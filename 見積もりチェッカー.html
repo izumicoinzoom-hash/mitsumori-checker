@@ -180,6 +180,7 @@
       const [selectedAreas, setSelectedAreas] = useState([]);
       const [checkedItems, setCheckedItems] = useState({});
       const [expandedHelp, setExpandedHelp] = useState({});
+      const [areaPatterns, setAreaPatterns] = useState({});
       const [toastMessage, setToastMessage] = useState("");
       const [showConfirm, setShowConfirm] = useState(false);
       const [reportMeta, setReportMeta] = useState({
@@ -232,6 +233,7 @@
         setCheckedItems({});
         setSelectedAreas([]);
         setExpandedHelp({});
+        setAreaPatterns({});
         setReportMeta({ 受付番号: "", 車両情報: "", 担当者: "" });
         setShowConfirm(false);
         showToast("リセットしました");
@@ -243,6 +245,10 @@
 
       const handlePrint = () => {
         window.print();
+      };
+
+      const handlePatternChange = (label, pattern) => {
+        setAreaPatterns(prev => ({ ...prev, [label]: pattern }));
       };
 
       const handleCopy = async () => {
@@ -273,7 +279,8 @@
         }
 
         for (const [label, items] of Object.entries(grouped)) {
-          text += `■ ${label}\n`;
+          const pattern = areaPatterns[label] || "未選択";
+          text += `■ ${label}（${pattern}）\n`;
           items.forEach(item => {
             text += ` ・ ${item}\n`;
           });
@@ -442,11 +449,26 @@
                     return (
                       <div key={area.label} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden animate-fade-in">
                         <div className="bg-slate-50 border-b border-gray-200 p-4 flex justify-between items-center">
-                          <h2 className="text-lg md:text-xl font-bold text-slate-800 flex items-center">
-                            <ClipboardList className="mr-2 text-blue-600 w-6 h-6" />
-                            {area.label}
-                          </h2>
-                          <button onClick={() => handleToggleArea(area.areaKey, area.label)} className="text-gray-400 hover:text-red-500 bg-white border border-gray-200 rounded p-1 shadow-sm transition-colors">
+                          <div className="flex-1">
+                            <h2 className="text-lg md:text-xl font-bold text-slate-800 flex items-center">
+                              <ClipboardList className="mr-2 text-blue-600 w-6 h-6" />
+                              {area.label}
+                            </h2>
+                            <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                              {["新品交換", "中古交換", "修理"].map((pattern) => (
+                                <label key={pattern} className="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                                  <input
+                                    type="radio"
+                                    name={`pattern-${area.label}`}
+                                    checked={(areaPatterns[area.label] || "") === pattern}
+                                    onChange={() => handlePatternChange(area.label, pattern)}
+                                  />
+                                  <span className="text-gray-700">{pattern}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </div>
+                          <button onClick={() => handleToggleArea(area.areaKey, area.label)} className="text-gray-400 hover:text-red-500 bg-white border border-gray-200 rounded p-1 shadow-sm transition-colors ml-3">
                             <X className="w-5 h-5" />
                           </button>
                         </div>
@@ -546,7 +568,9 @@
                     <div key={area.label} className="print-avoid-break border-2 border-gray-600 rounded-lg overflow-hidden">
                       <div className="bg-gray-100 border-b-2 border-gray-600 p-2 px-4 flex justify-between items-center">
                         <h2 className="text-lg font-bold">{area.label}</h2>
-                        <span className="text-sm font-bold">チェック済: {checkedCount} / {items.length} 項目</span>
+                        <span className="text-sm font-bold">
+                          {areaPatterns[area.label] || "未選択"} / チェック済: {checkedCount} / {items.length} 項目
+                        </span>
                       </div>
                       <div className="p-4 grid grid-cols-2 gap-y-3 gap-x-6">
                         {items.map((item, idx) => {
