@@ -454,17 +454,21 @@
                               <ClipboardList className="mr-2 text-blue-600 w-6 h-6" />
                               {area.label}
                             </h2>
-                            <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                            <div className="mt-2 flex flex-wrap gap-2 text-sm">
                               {["新品交換", "中古交換", "修理"].map((pattern) => (
-                                <label key={pattern} className="inline-flex items-center gap-1.5 cursor-pointer select-none">
-                                  <input
-                                    type="radio"
-                                    name={`pattern-${area.label}`}
-                                    checked={(areaPatterns[area.label] || "") === pattern}
-                                    onChange={() => handlePatternChange(area.label, pattern)}
-                                  />
-                                  <span className="text-gray-700">{pattern}</span>
-                                </label>
+                                <button
+                                  key={pattern}
+                                  type="button"
+                                  aria-pressed={(areaPatterns[area.label] || "") === pattern}
+                                  onClick={() => handlePatternChange(area.label, pattern)}
+                                  className={`px-3 py-1.5 rounded-lg font-bold border transition-all duration-150 select-none
+                                    ${(areaPatterns[area.label] || "") === pattern
+                                      ? "bg-blue-600 text-white border-blue-700 border-b-2 shadow-inner"
+                                      : "bg-white text-gray-700 border-gray-300 border-b-4 shadow-sm hover:bg-gray-50 active:translate-y-[1px] active:border-b-2"}
+                                  `}
+                                >
+                                  {pattern}
+                                </button>
                               ))}
                             </div>
                           </div>
