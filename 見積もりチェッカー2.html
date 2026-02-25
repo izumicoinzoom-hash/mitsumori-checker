@@ -47,7 +47,7 @@
           { name: "コーナーポール", isKeyPoint: false, desc: "バンパー角のポール。曲がりや作動不良を確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "センサー（個数確認）", isKeyPoint: false, desc: "障害物を検知するソナーセンサー。損傷の有無と個数を確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "センサー穴あけ加工", isKeyPoint: true, hint: "センサー用穴あけ加工の工賃を忘れずに計上", desc: "新品バンパーにセンサー用の穴が開いていない場合、ドリルで穴をあける作業です。", appliesTo: ['new'] },
-          { name: "マスキング(素地)", isKeyPoint: true, hint: "素地部分のマスキング作業工賃", desc: "バンパーを塗装する際、塗料がついてはいけない素地部分をテープで覆い隠す作業です。", appliesTo: ['repair', 'used'] }
+          { name: "マスキング（素地）", isKeyPoint: true, hint: "素地部分のマスキング作業工賃", desc: "バンパーを塗装する際、塗料がついてはいけない素地部分をテープで覆い隠す作業です。", appliesTo: ['repair', 'used'] }
         ]
       },
       "ボンネット": {
@@ -71,7 +71,7 @@
           { name: "サイドステップカバー", isKeyPoint: false, desc: "ドア下部のロッカーパネルを覆う長いカバー。フェンダー奥のボルトを外す際に脱着が必要。", appliesTo: ['new', 'used'] },
           { name: "カウルトップガーニッシュ脱着", isKeyPoint: true, hint: "交換時の隣接部品脱着忘れに注意", desc: "ワイパー下の黒い樹脂カバー。フェンダー上部の奥のボルトを外すために脱着が必要。", appliesTo: ['new', 'used'] },
           { name: "内板骨格パネル別調色", isKeyPoint: true, hint: "外板と内板骨格の色が違う場合の調色費用", desc: "新品パネルの裏側など、外側のボディ色と異なる色を塗るために、別の塗料を作る費用です。", appliesTo: ['new'] },
-          { name: "チッピング塗装", isKeyPoint: true, hint: "下部飛び石防止のチッピング塗装工賃", desc: "フェンダー下部のザラザラした飛び石防止塗装を再現する作業です。", appliesTo: ['repair', 'new'] }
+          { name: "チッピング塗装", isKeyPoint: true, hint: "下部飛び石防止のチッピング塗装工賃", desc: "フェンダー下部のザラザラした飛び石防止塗装を再現する作業です。", appliesTo: ['repair', 'new', 'used'] }
         ]
       },
       "フロントドア": {
@@ -83,11 +83,11 @@
           { name: "ウィンドモール", isKeyPoint: false, desc: "窓ガラス下部や外周のモール。メッキの曲がりやキズを確認。", appliesTo: ['repair', 'new', 'used'] },
           { name: "プロテクターモール", isKeyPoint: false, desc: "ドア中段のキズ防止モール。変形や両面テープの剥がれを確認。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ブラックアウトテープ", isKeyPoint: false, desc: "窓枠の柱（ピラー）に貼られた黒いテープ。塗装時に剥がすため新品貼り替えが必要。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "ストライプテープ / エッジモール", isKeyPoint: false, desc: "ドアのフチのキズ防止モールや装飾テープ類。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "ハンドル下シール(プロテクター)", isKeyPoint: false, desc: "ドアハンドルの奥に貼る引っかき傷防止の透明シールなど。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "ストライプテープ・エッジモール", isKeyPoint: false, desc: "ドアのフチのキズ防止モールや装飾テープ類。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "ハンドル下シール（プロテクター）", isKeyPoint: false, desc: "ドアハンドルの奥に貼る引っかき傷防止の透明シールなど。", appliesTo: ['repair', 'new', 'used'] },
           { name: "エンブレム", isKeyPoint: false, desc: "ドアに貼られたマーク類。再使用不可のため新品を手配します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ドアヒンジ取替時ピラー部分鈑金", isKeyPoint: true, hint: "ヒンジ損傷に伴うピラー側の鈑金", desc: "ドアの根元（ヒンジ）が押され、車体側（ピラー）が凹んでいる場合の引き出し・修正作業です。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "隣接ドア(リアドア等)脱着", isKeyPoint: true, hint: "作業スペース確保やぼかし塗装のための脱着", desc: "フロントドアを修理・塗装する際、邪魔になるリアドアを一時的に外す作業です。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "隣接ドア（リアドア等）脱着", isKeyPoint: true, hint: "作業スペース確保やぼかし塗装のための脱着", desc: "フロントドアを修理・塗装する際、邪魔になるリアドアを一時的に外す作業です。", appliesTo: ['repair', 'new', 'used'] },
           { name: "シーリング（材料・技術）", isKeyPoint: true, hint: "ドアヘミング部のシーリング作業", desc: "新品ドアのふちの折り返し部分に、防水ボンドを塗布する作業と材料代です。", appliesTo: ['new'] },
           { name: "ヒンジ塗装", isKeyPoint: true, hint: "ヒンジ部の塗装工賃", desc: "新品のドアヒンジをボディ色に合わせて単体で塗装する作業です。", appliesTo: ['new', 'used'] },
           { name: "エーミング作業", isKeyPoint: true, hint: "ミラーカメラや各種センサー脱着後のエーミング", desc: "ドアミラーカメラを脱着・交換した際に行う、カメラの校正（ターゲット読み込み）作業です。", appliesTo: ['repair', 'new', 'used'] }
@@ -109,8 +109,8 @@
           { name: "ウィンドモール", isKeyPoint: false, desc: "窓枠のモール。メッキの曲がりやキズを確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "プロテクターモール", isKeyPoint: false, desc: "ドア中段のモール。変形やキズを確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ブラックアウトテープ", isKeyPoint: false, desc: "窓枠の黒いテープ。塗装時は新品への貼り替えが必要です。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "ストライプテープ / エッジモール", isKeyPoint: false, desc: "装飾テープやフチのモール類です。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "ハンドル下シール(プロテクター)", isKeyPoint: false, desc: "ハンドル奥のキズ防止用シールです。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "ストライプテープ・エッジモール", isKeyPoint: false, desc: "装飾テープやフチのモール類です。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "ハンドル下シール（プロテクター）", isKeyPoint: false, desc: "ハンドル奥のキズ防止用シールです。", appliesTo: ['repair', 'new', 'used'] },
           { name: "エンブレム", isKeyPoint: false, desc: "車名などのマーク類です。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ドアヒンジ取替時ピラー部分鈑金", isKeyPoint: true, hint: "ヒンジ・レール損傷に伴うピラー・クォーター鈑金", desc: "スライドドアのレールやヒンジが押され、ボディ側が変形している場合の修正作業です。", appliesTo: ['repair', 'new', 'used'] },
           { name: "シーリング（材料・技術）", isKeyPoint: true, hint: "ドアヘミング部のシーリング作業", desc: "新品ドアパネルのふちの防水処理作業と材料代です。", appliesTo: ['new'] },
@@ -121,11 +121,11 @@
         items: [
           { name: "クォーターガラス", isKeyPoint: false, desc: "はめ殺しになっているリア横のガラス。クォーターパネルの鈑金・塗装時には脱着が必要です。", appliesTo: ['repair', 'new', 'used'] },
           { name: "プロテクターガード", isKeyPoint: false, desc: "下部などに貼られている飛び石防止用の透明なフィルムです。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "フェールリッド (給油口)", isKeyPoint: false, desc: "給油口のフタ。閉まり具合の不良や、チリ（隙間）のズレを確認します。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "フェールリッド（給油口）", isKeyPoint: false, desc: "給油口のフタ。閉まり具合の不良や、チリ（隙間）のズレを確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ホイールアウターパネル", isKeyPoint: false, desc: "タイヤを囲うハウス外側のパネル部。内部まで曲がっていないか確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "ホイール", isKeyPoint: false, desc: "タイヤのホイール。接触によるリムの削れや歪みを確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "アンダーコート", isKeyPoint: true, hint: "防錆アンダーコートの塗装工賃・材料代", desc: "パネル下部や裏側に塗布する、ザラザラしたサビ止め・防音用塗料の作業です。", appliesTo: ['repair', 'new'] },
-          { name: "アーチテープ(シーラー)", isKeyPoint: true, hint: "ホイールアーチ部のシーラー", desc: "タイヤアーチ（フチ）の折り返し部分に入れる防水ボンド処理です。", appliesTo: ['repair', 'new'] },
+          { name: "アーチテープ（シーラー）", isKeyPoint: true, hint: "ホイールアーチ部のシーラー", desc: "タイヤアーチ（フチ）の折り返し部分に入れる防水ボンド処理です。", appliesTo: ['repair', 'new'] },
           { name: "クォーター塗装時アンダーコート", isKeyPoint: true, hint: "塗装時のアンダーコート再処理", desc: "塗装のために元のアンダーコートを剥がした際、再度塗り直す作業です。", appliesTo: ['repair', 'new'] },
           { name: "シート・内張り脱着", isKeyPoint: true, hint: "裏側からの叩き出しや溶接に伴う室内パーツ脱着", desc: "クォーターパネルを裏側から鈑金したり溶接する際、焦げを防ぐため室内のシートや内張りを外す作業です。", appliesTo: ['repair', 'new'] },
           { name: "内板骨格パネル別調色", isKeyPoint: true, hint: "内側パネルの別調色費用", desc: "トランクの内側など、ボディ外側と異なる色の部分を塗るために別の色を作る費用です。", appliesTo: ['new'] }
@@ -138,7 +138,7 @@
           { name: "センターストップランプ", isKeyPoint: false, desc: "上部にあるハイマウントストップランプ。レンズ割れや点灯不良を確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "エンブレム", isKeyPoint: false, desc: "車名やメーカーロゴ。塗装・交換時は新品を手配します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "バックカメラ", isKeyPoint: false, desc: "後方確認用カメラ。レンズの割れや映像の映りを確認します。", appliesTo: ['repair', 'new', 'used'] },
-          { name: "ドライブレコーダー(リア)", isKeyPoint: false, desc: "リアガラスに貼られたドラレコ。ガラス交換時は両面テープでの再設置や配線処理が必要です。", appliesTo: ['repair', 'new', 'used'] },
+          { name: "ドライブレコーダー（リア）", isKeyPoint: false, desc: "リアガラスに貼られたドラレコ。ガラス交換時は両面テープでの再設置や配線処理が必要です。", appliesTo: ['repair', 'new', 'used'] },
           { name: "樹脂パーツ", isKeyPoint: false, desc: "バックドアのガーニッシュ（装飾パネル）。メッキのキズや割れを確認します。", appliesTo: ['repair', 'new', 'used'] },
           { name: "スポイラー穴あけ加工", isKeyPoint: true, hint: "スポイラー取付用の穴あけ工賃", desc: "新品バックドアにスポイラー用の穴が開いていない場合、ドリルで穴をあける加工です。", appliesTo: ['new'] },
           { name: "カメラ穴あけ加工", isKeyPoint: true, hint: "カメラ取付用の穴あけ工賃", desc: "新品のガーニッシュ等にバックカメラ用の穴をあける加工作業です。", appliesTo: ['new'] },
@@ -162,14 +162,15 @@
 
     const commonItems = {
       items: [
+        { name: "基本準備時間", isKeyPoint: true, hint: "車両搬入出・工具準備／片付け等の基本作業時間", desc: "実作業前後に必ず発生する、段取り・準備・片付けの基本時間です。", appliesTo: ['all'] },
         { name: "スキャンツール（OBD診断機）接続・診断費用", isKeyPoint: true, hint: "入庫時・出庫時のシステム診断費用", desc: "最近の車は目に見えないコンピューターエラーが残るため、専用診断機で入庫時と出庫時にチェックする費用です。", appliesTo: ['all'] },
+        { name: "入庫・納車時の外観写真撮影", isKeyPoint: true, hint: "立会確認・記録用の写真撮影費用", desc: "入庫時と納車時に車両外観を撮影し、立会確認書や記録に使用する作業です。", appliesTo: ['all'] },
+        { name: "塗装ブース使用加算", isKeyPoint: true, hint: "塗装ブースを使用した場合の光熱費・設備加算", desc: "ゴミやホコリを遮断し、加熱乾燥を行う専用塗装ブースの設備費用です。", appliesTo: ['repair', 'new', 'used'] },
+        { name: "塗装範囲外ミスト養生作業", isKeyPoint: true, hint: "塗料ミストから車両全体を守る養生費用", desc: "塗装中のミスト付着を防ぐため、非塗装部位を全体養生する作業です。", appliesTo: ['repair', 'new', 'used'] },
         { name: "エーミング作業費用", isKeyPoint: true, hint: "バンパーやガラス、センサー脱着時の校正作業", desc: "センサーやカメラが付いた部品を脱着・交換した際、自動ブレーキ等が正しく作動するようターゲットを使って調整（校正）する作業です。", appliesTo: ['repair', 'new', 'used'] },
         { name: "試運転費用", isKeyPoint: true, hint: "足回り修理やシステム調整後の走行確認", desc: "足回りの修理やエーミング後、実際に道路を走って異音やシステムが正常に作動するか確認するテスト費用です。", appliesTo: ['all'] },
         { name: "洗車・室内清掃費用", isKeyPoint: true, hint: "作業完了後の洗車および車内清掃", desc: "修理完了後、お客様に綺麗な状態で納車するための洗車と室内清掃にかかる費用です。", appliesTo: ['all'] },
-        { name: "廃棄物処理代（産廃代）", isKeyPoint: true, hint: "交換部品・研磨粉・塗料廃材等の処分費用", desc: "交換部品や塗装・鈑金で発生する事業系廃棄物を適正に処理するための費用です。", appliesTo: ['repair', 'new', 'used'] },
-        { name: "塗装ブース使用加算", isKeyPoint: true, hint: "塗装ブースを使用した場合の光熱費・設備加算", desc: "ゴミやホコリを遮断し、加熱乾燥を行う専用塗装ブースの設備費用です。", appliesTo: ['repair', 'new', 'used'] },
-        { name: "塗装範囲外ミスト養生作業", isKeyPoint: true, hint: "塗料ミストから車両全体を守る養生費用", desc: "塗装中のミスト付着を防ぐため、非塗装部位を全体養生する作業です。", appliesTo: ['repair', 'new', 'used'] },
-        { name: "基本準備時間", isKeyPoint: true, hint: "車両搬入出・工具準備/片付け等の基本作業時間", desc: "実作業前後に必ず発生する、段取り・準備・片付けの基本時間です。", appliesTo: ['all'] }
+        { name: "廃棄物処理代（産廃代）", isKeyPoint: true, hint: "交換部品・研磨粉・塗料廃材等の処分費用", desc: "交換部品や塗装・鈑金で発生する事業系廃棄物を適正に処理するための費用です。", appliesTo: ['repair', 'new', 'used'] }
       ]
     };
 
