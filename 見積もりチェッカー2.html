@@ -330,7 +330,7 @@
         const a = sanitize(reportMeta.お客様名) || 'お客様名';
         const b = sanitize(reportMeta.車種) || '車種';
         const c = sanitize(reportMeta.ナンバー) || 'ナンバー';
-        const filename = `見積もりチェック結果_${a}_${b}_${c}.pdf`;
+        const filename = `${a}_${b}_${c}.pdf`;
         const opt = {
           margin: 10,
           filename,
