@@ -201,8 +201,7 @@
         お客様名: "",
         車種: "",
         ナンバー: "",
-        受付番号: "",
-        車両情報: "",
+        カラーNo: "",
         担当者: ""
       });
 
@@ -312,7 +311,7 @@
         setSelectedAreas([]);
         setWorkTypes({});
         setExpandedHelp({});
-        setReportMeta({ お客様名: "", 車種: "", ナンバー: "", 受付番号: "", 車両情報: "", 担当者: "" });
+        setReportMeta({ お客様名: "", 車種: "", ナンバー: "", カラーNo: "", 担当者: "" });
         setShowConfirm(false);
         showToast("リセットしました");
       };
@@ -442,14 +441,10 @@
                   <input value={reportMeta.ナンバー} onChange={(e) => handleMetaChange("ナンバー", e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="例: 品川300あ1234" />
                 </label>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 border-t border-gray-100 pt-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 border-t border-gray-100 pt-3">
                 <label className="text-sm">
-                  <span className="block text-gray-600 mb-1 font-medium">受付番号</span>
-                  <input value={reportMeta.受付番号} onChange={(e) => handleMetaChange("受付番号", e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="例: 2026-0012" />
-                </label>
-                <label className="text-sm">
-                  <span className="block text-gray-600 mb-1 font-medium">車両情報</span>
-                  <input value={reportMeta.車両情報} onChange={(e) => handleMetaChange("車両情報", e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="例: トヨタ プリウス" />
+                  <span className="block text-gray-600 mb-1 font-medium">カラー№</span>
+                  <input value={reportMeta.カラーNo} onChange={(e) => handleMetaChange("カラーNo", e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="例: 3R2" />
                 </label>
                 <label className="text-sm">
                   <span className="block text-gray-600 mb-1 font-medium">担当者</span>
@@ -646,9 +641,8 @@
                 <div><span className="font-bold">車種:</span> {reportMeta.車種 || "未入力"}</div>
                 <div><span className="font-bold">ナンバー:</span> {reportMeta.ナンバー || "未入力"}</div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 border-t border-gray-400 pt-2 mt-2">
-                <div><span className="font-bold">受付番号:</span> {reportMeta.受付番号 || "未入力"}</div>
-                <div><span className="font-bold">車両情報:</span> {reportMeta.車両情報 || "未入力"}</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 border-t border-gray-400 pt-2 mt-2">
+                <div><span className="font-bold">カラー№:</span> {reportMeta.カラーNo || "未入力"}</div>
                 <div><span className="font-bold">担当者:</span> {reportMeta.担当者 || "未入力"}</div>
               </div>
             </div>
