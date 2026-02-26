@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>見積もり抜け漏れ防止チェックリスト（案1）</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+  <div id="root"></div>
+  <noscript>このページは JavaScript が必要です。ブラウザで JavaScript を有効にしてください。</noscript>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // アイコン
+    const Check = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>);
+    const AlertTriangle = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>);
+    const X = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>);
+    const ClipboardCheck = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 12l2 2 4-4"/></svg>);
+
+    // 写真メモ書き.md に基づくデータ（脱着項目・修理工程・アラート）
+    const AREA_DATA = {
+      "Fバンパー": {
+        disassembly: [
+          { name: "分解脱着（基本工数）", hint: "0.8〜1.5h 目安。計算: 交換工賃指数－脱着工賃指数×0.8" },
+          { name: "スポイラー付き", hint: "追加 h" },
+          { name: "フォグ付き", hint: "追加 h" },
+          { name: "素地付き", hint: "追加 h" }
+        ],
+        process: [
+          { name: "水洗い・キズ確認", hint: "工数 h" },
+          { name: "修正（キズのみ）", hint: "パテ→サフェーサー→色塗装→みがき" },
+          { name: "修正（ヘコミ有）", hint: "熱→パテ→サフェーサー→色塗装→みがき" }
+        ],
+        alerts: [
+          "Fバンパー中古交換は新品取替と同じです。"
+        ]
+      },
+      "フロントドア": {
+        disassembly: [
+          { name: "脱着ドア", hint: "例: 0.3h〜" },
+          { name: "ドアトリム", hint: "例: 0.1h〜" },
+          { name: "アウトサイドモール（水切りモール）", hint: "例: 0.25h〜" },
+          { name: "プロテクターモール", hint: "例: 0.2h〜" },
+          { name: "アウターハンドル", hint: "例: 0.2h〜" },
+          { name: "ドアミラー", hint: "例: 0.3h〜" },
+          { name: "レギュレーター", hint: "例: 0.7h〜" },
+          { name: "オートスライドドアインナー部品", hint: "h" }
+        ],
+        process: [
+          { name: "鈑金" },
+          { name: "パテ" },
+          { name: "ポリパテ" },
+          { name: "サフェーサー" },
+          { name: "色塗装" },
+          { name: "みがき" }
+        ],
+        extra: [
+          { name: "シーリングもらうこと", hint: "¥1200〜", isAlert: true }
+        ],
+        alerts: [
+          "シーリング代もらうこと: ¥1200〜",
+          "ドア（スライド）の大きさによって脱着工賃1時間以上かかることがあります。",
+          "特殊項目：ドア開閉機構・ウィンド開閉等リセットは費用実費請求です。",
+          "中古交換は 新品取替 ＋ 入替工賃 2h〜"
+        ]
+      },
+      "Rドア（スライドドア）": {
+        disassembly: [
+          { name: "脱着ドア", hint: "h" },
+          { name: "ドアトリム", hint: "h" },
+          { name: "アウトサイドモール", hint: "h" },
+          { name: "プロテクターモール", hint: "h" },
+          { name: "アウターハンドル", hint: "h" },
+          { name: "ドアミラー", hint: "h" },
+          { name: "オートスライドドアインナー部品", hint: "h" }
+        ],
+        process: [
+          { name: "鈑金" },
+          { name: "パテ" },
+          { name: "ポリパテ" },
+          { name: "サフェーサー" },
+          { name: "色塗装" },
+          { name: "みがき" }
+        ],
+        extra: [
+          { name: "シーリング代もらうこと", hint: "1200円〜", isAlert: true }
+        ],
+        alerts: [
+          "シーリング代もらうこと 1200円〜",
+          "特殊項目：ドア開閉機構・ウィンド開閉等リセット 費用実費請求です。",
+          "中古交換は 新品取替工賃 ＋ 入替工賃 2h〜"
+        ]
+      },
+      "Rフェンダー": {
+        disassembly: [
+          { name: "Rドア（スライドドア）脱着", hint: "0.8h〜 ＋ 回" },
+          { name: "シーリング材料費", hint: "m" },
+          { name: "シート脱着", hint: "h" },
+          { name: "内板骨格パネル調色", hint: "h" }
+        ],
+        process: [],
+        alerts: []
+      },
+      "バックドア": {
+        disassembly: [
+          { name: "バックカメラ脱着", hint: "h" },
+          { name: "ナンバープレート脱着", hint: "h" },
+          { name: "スポイラー脱着", hint: "h" },
+          { name: "エンブレム交換", hint: "個" }
+        ],
+        process: [
+          { name: "鈑金" },
+          { name: "パテ" },
+          { name: "ポリパテ" },
+          { name: "サフェーサー" },
+          { name: "色塗装" },
+          { name: "みがき" }
+        ],
+        alerts: [
+          "中古交換は 新品取替工賃 ＋ 入替工賃 2h〜"
+        ]
+      },
+      "Rバンパー": {
+        disassembly: [
+          { name: "分解脱着（基本工数）", hint: "0.8〜1.5h 目安。計算: 交換工賃指数－脱着工賃指数×0.8" },
+          { name: "スポイラー付き", hint: "追加 h" },
+          { name: "センサー付き", hint: "追加 h" },
+          { name: "素地付き", hint: "追加 h" }
+        ],
+        process: [
+          { name: "水洗い・キズ確認", hint: "工数 h" },
+          { name: "修正（キズのみ）", hint: "パテ→サフェーサー→色塗装→みがき" },
+          { name: "修正（ヘコミ有り）", hint: "熱→パテ→サフェーサー→色塗装→みがき" }
+        ],
+        alerts: [
+          "Rバンパー中古交換は新品の取替と同じです。"
+        ]
+      }
+    };
+
+    const AREA_KEYS = Object.keys(AREA_DATA);
+
+    function App() {
+      const [openedArea, setOpenedArea] = useState(null);
+      const [checked, setChecked] = useState({}); // { "Fバンパー::分解脱着（基本工数）": true, ... }
+      const [alertQueue, setAlertQueue] = useState([]); // [{ id, message }, ...]
+      const [seenAlerts, setSeenAlerts] = useState({}); // 部位ごとに初回だけアラート表示
+
+      const itemKey = (area, itemName) => `${area}::${itemName}`;
+      const isChecked = (area, itemName) => !!checked[itemKey(area, itemName)];
+
+      const toggleCheck = (area, itemName) => {
+        setChecked(prev => {
+          const key = itemKey(area, itemName);
+          const next = { ...prev };
+          if (next[key]) delete next[key]; else next[key] = true;
+          return next;
+        });
+      };
+
+      const openArea = (area) => {
+        setOpenedArea(area);
+        // 初めて開いた部位ならアラートをキューに追加
+        if (!seenAlerts[area] && AREA_DATA[area].alerts?.length) {
+          setSeenAlerts(prev => ({ ...prev, [area]: true }));
+          setAlertQueue(prev => [
+            ...prev,
+            ...AREA_DATA[area].alerts.map((msg, i) => ({ id: `${area}-${Date.now()}-${i}`, message: msg }))
+          ]);
+        }
+      };
+
+      const closeAlert = (id) => {
+        setAlertQueue(prev => prev.filter(a => a.id !== id));
+      };
+
+      const data = openedArea ? AREA_DATA[openedArea] : null;
+      const allItems = data
+        ? [
+            ...(data.disassembly || []).map(i => ({ ...i, group: 'disassembly' })),
+            ...(data.process || []).map(i => ({ ...i, group: 'process' })),
+            ...(data.extra || []).map(i => ({ ...i, group: 'extra' }))
+          ]
+        : [];
+      const disassemblyItems = allItems.filter(i => i.group === 'disassembly');
+      const processItems = allItems.filter(i => i.group === 'process');
+      const extraItems = allItems.filter(i => i.group === 'extra');
+
+      return (
+        <div className="min-h-screen pb-8">
+          <header className="bg-slate-800 text-white p-4 shadow-md sticky top-0 z-20">
+            <div className="max-w-2xl mx-auto flex items-center">
+              <ClipboardCheck className="w-6 h-6 mr-2 text-amber-300" />
+              <h1 className="text-lg font-bold">見積もり抜け漏れ防止チェックリスト</h1>
+            </div>
+            <p className="text-slate-300 text-xs mt-1 max-w-2xl mx-auto">
+              修理する部位をタップ → 脱着・工程をチェック。忘れがちな請求はアラートで表示します。
+            </p>
+          </header>
+
+          <main className="max-w-2xl mx-auto p-4 space-y-4">
+            <section>
+              <h2 className="text-sm font-bold text-gray-600 mb-2">修理する部位を選択（タップ）</h2>
+              <div className="flex flex-wrap gap-2">
+                {AREA_KEYS.map(area => {
+                  const d = AREA_DATA[area];
+                  const total = (d.disassembly?.length || 0) + (d.process?.length || 0) + (d.extra?.length || 0);
+                  const count = total && openedArea === area
+                    ? allItems.filter(i => isChecked(area, i.name)).length
+                    : 0;
+                  const done = total > 0 && count === total;
+                  return (
+                    <button
+                      key={area}
+                      onClick={() => openArea(area)}
+                      className={`px-4 py-2.5 rounded-xl font-bold text-sm border-2 transition-all
+                        ${openedArea === area
+                          ? 'bg-blue-600 text-white border-blue-700 shadow-md'
+                          : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-50 hover:border-blue-200'}
+                        ${done ? 'ring-2 ring-green-400 ring-offset-2' : ''}`}
+                    >
+                      {area}
+                      {count > 0 && !done && <span className="ml-1 text-xs opacity-90">({count}/{total})</span>}
+                      {done && <Check className="w-4 h-4 inline-block ml-1 align-middle" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            {openedArea && data && (
+              <section className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden animate-fade-in">
+                <div className="bg-slate-100 border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+                  <h2 className="text-lg font-bold text-slate-800">{openedArea}</h2>
+                  <button
+                    onClick={() => setOpenedArea(null)}
+                    className="text-gray-400 hover:text-red-500 p-1 rounded"
+                    aria-label="閉じる"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-4 space-y-6">
+                  {disassemblyItems.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-600 mb-2 flex items-center">
+                        <AlertTriangle className="w-4 h-4 mr-1 text-amber-500" />
+                        脱着が必要なパーツ
+                      </h3>
+                      <ul className="space-y-2">
+                        {disassemblyItems.map((item, idx) => (
+                          <CheckRow
+                            key={idx}
+                            area={openedArea}
+                            item={item}
+                            checked={isChecked(openedArea, item.name)}
+                            onToggle={() => toggleCheck(openedArea, item.name)}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {processItems.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-600 mb-2">修理の工程</h3>
+                      <ul className="space-y-2">
+                        {processItems.map((item, idx) => (
+                          <CheckRow
+                            key={idx}
+                            area={openedArea}
+                            item={item}
+                            checked={isChecked(openedArea, item.name)}
+                            onToggle={() => toggleCheck(openedArea, item.name)}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {extraItems.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-bold text-amber-700 mb-2">忘れがちな請求項目</h3>
+                      <ul className="space-y-2">
+                        {extraItems.map((item, idx) => (
+                          <CheckRow
+                            key={idx}
+                            area={openedArea}
+                            item={item}
+                            checked={isChecked(openedArea, item.name)}
+                            onToggle={() => toggleCheck(openedArea, item.name)}
+                            highlight={item.isAlert}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {openedArea === null && (
+              <div className="text-center py-12 text-gray-400 text-sm">
+                上から修理する部位をタップすると、その部位の脱着一覧・工程・注意事項が表示されます。チェックしながら見積もりを作成すると抜け漏れを防げます。
+              </div>
+            )}
+          </main>
+
+          {/* アラート（ポップアップ） */}
+          {alertQueue.length > 0 && (
+            <div className="fixed inset-0 z-50 flex flex-col items-center justify-end p-4 pb-24 pointer-events-none">
+              <div className="flex flex-col gap-2 w-full max-w-md pointer-events-auto">
+                {alertQueue.slice(0, 3).map(alert => (
+                  <div
+                    key={alert.id}
+                    className="flex items-start gap-2 bg-amber-50 border-2 border-amber-300 rounded-xl p-4 shadow-lg animate-fade-in"
+                  >
+                    <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm font-medium text-amber-900 flex-1">{alert.message}</p>
+                    <button
+                      onClick={() => closeAlert(alert.id)}
+                      className="text-amber-600 hover:text-amber-800 p-1 rounded flex-shrink-0"
+                      aria-label="閉じる"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function CheckRow({ area, item, checked, onToggle, highlight }) {
+      return (
+        <li
+          onClick={onToggle}
+          className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
+            ${checked ? 'bg-blue-50 border-blue-300' : 'bg-gray-50 border-gray-200 hover:border-blue-200'}
+            ${highlight ? 'border-amber-300 bg-amber-50/50' : ''}`}
+        >
+          <div className={`flex-shrink-0 w-6 h-6 rounded border-2 flex items-center justify-center
+            ${checked ? 'bg-blue-600 border-blue-600' : 'bg-white border-gray-300'}`}>
+            {checked && <Check className="w-4 h-4 text-white stroke-[3]" />}
+          </div>
+          <div className="flex-1 min-w-0">
+            <span className={`font-medium block ${checked ? 'text-blue-900 line-through' : 'text-gray-800'}`}>
+              {item.name}
+            </span>
+            {item.hint && (
+              <span className="text-xs text-gray-500 mt-0.5 block">{item.hint}</span>
+            )}
+          </div>
+        </li>
+      );
+    }
+
+    const root = document.getElementById('root');
+    ReactDOM.createRoot(root).render(<App />);
+  </script>
+  <style>
+    .animate-fade-in { animation: fadeIn 0.2s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</body>
+</html>
