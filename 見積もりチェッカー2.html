@@ -455,46 +455,46 @@
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* 左カラム: 車両イラスト */}
-            <div className="lg:col-span-5 lg:sticky lg:top-24">
-              <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
-                <h2 className="text-center font-bold text-gray-700 mb-4 flex items-center justify-center">
-                  <Car className="mr-2 w-5 h-5 text-gray-500" />
-                  損傷部位を選択（複数可）
-                </h2>
-                
-                <div className="flex flex-col items-center gap-1.5 w-full max-w-[320px] mx-auto bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
-                  {renderPartButton({ label: "フロントバンパー", partName: "フロントバンパー", className: "w-[85%] rounded-t-[2rem] rounded-b-md" })}
-                  <div className="flex w-full gap-1.5 h-20">
-                    {renderPartButton({ label: "左Fフェンダー", partName: "フロントフェンダー", className: "w-1/4 rounded-tl-2xl rounded-bl-sm" })}
-                    {renderPartButton({ label: "ボンネット", partName: "ボンネット", className: "w-2/4 rounded-sm border-b-4 border-b-gray-400" })}
-                    {renderPartButton({ label: "右Fフェンダー", partName: "フロントフェンダー", className: "w-1/4 rounded-tr-2xl rounded-br-sm" })}
-                  </div>
-                  <div className="flex w-full gap-1.5 h-20">
-                    {renderPartButton({ label: "左Fドア", partName: "フロントドア", className: "w-1/4 rounded-sm" })}
-                    {renderPartButton({ label: "ルーフ", partName: "ルーフ", className: "w-2/4 rounded-sm" })}
-                    {renderPartButton({ label: "右Fドア", partName: "フロントドア", className: "w-1/4 rounded-sm" })}
-                  </div>
-                  <div className="flex w-full gap-1.5 h-20">
-                    {renderPartButton({ label: "左Rドア", partName: "リアドア（スライドドア）", className: "w-1/4 rounded-sm" })}
-                    <div className="w-2/4 bg-slate-200/60 flex items-center justify-center rounded-sm border border-slate-300 border-dashed">
-                      <span className="text-slate-400 text-xs font-medium">室内/フロア</span>
-                    </div>
-                    {renderPartButton({ label: "右Rドア", partName: "リアドア（スライドドア）", className: "w-1/4 rounded-sm" })}
-                  </div>
-                  <div className="flex w-full gap-1.5 h-16">
-                    {renderPartButton({ label: "左クォーター", partName: "クォーターパネル", className: "w-1/4 rounded-bl-2xl rounded-tl-sm" })}
-                    {renderPartButton({ label: "バックドア", partName: "バックドア", className: "w-2/4 rounded-sm border-t-4 border-t-gray-400" })}
-                    {renderPartButton({ label: "右クォーター", partName: "クォーターパネル", className: "w-1/4 rounded-br-2xl rounded-tr-sm" })}
-                  </div>
-                  {renderPartButton({ label: "リヤバンパー", partName: "リヤバンパー", className: "w-[85%] rounded-b-[2rem] rounded-t-md" })}
-                </div>
+              {/* 左カラム: 車両イラスト */}
+              <div className="lg:col-span-5 lg:sticky lg:top-24">
+                <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
+                  <h2 className="text-center font-bold text-gray-700 mb-4 flex items-center justify-center">
+                    <Car className="mr-2 w-5 h-5 text-gray-500" />
+                    損傷部位を選択（複数可）
+                  </h2>
 
-                <div className="mt-6 w-full max-w-[320px] mx-auto">
-                  {renderPartButton({ label: "共通・付帯作業 (必須)", partName: "共通項目", className: "w-full bg-indigo-50 border-indigo-300 text-indigo-800 rounded-xl py-3 hover:bg-indigo-100" })}
+                  <div className="mt-2 w-full max-w-[320px] mx-auto">
+                    {renderPartButton({ label: "共通・付帯作業 (必須)", partName: "共通項目", className: "w-full bg-indigo-50 border-indigo-300 text-indigo-800 rounded-xl py-3 hover:bg-indigo-100" })}
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-1.5 w-full max-w-[320px] mx-auto bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                    {renderPartButton({ label: "フロントバンパー", partName: "フロントバンパー", className: "w-[85%] rounded-t-[2rem] rounded-b-md" })}
+                    <div className="flex w-full gap-1.5 h-20">
+                      {renderPartButton({ label: "左Fフェンダー", partName: "フロントフェンダー", className: "w-1/4 rounded-tl-2xl rounded-bl-sm" })}
+                      {renderPartButton({ label: "ボンネット", partName: "ボンネット", className: "w-2/4 rounded-sm border-b-4 border-b-gray-400" })}
+                      {renderPartButton({ label: "右Fフェンダー", partName: "フロントフェンダー", className: "w-1/4 rounded-tr-2xl rounded-br-sm" })}
+                    </div>
+                    <div className="flex w-full gap-1.5 h-20">
+                      {renderPartButton({ label: "左Fドア", partName: "フロントドア", className: "w-1/4 rounded-sm" })}
+                      {renderPartButton({ label: "ルーフ", partName: "ルーフ", className: "w-2/4 rounded-sm" })}
+                      {renderPartButton({ label: "右Fドア", partName: "フロントドア", className: "w-1/4 rounded-sm" })}
+                    </div>
+                    <div className="flex w-full gap-1.5 h-20">
+                      {renderPartButton({ label: "左Rドア", partName: "リアドア（スライドドア）", className: "w-1/4 rounded-sm" })}
+                      <div className="w-2/4 bg-slate-200/60 flex items-center justify-center rounded-sm border border-slate-300 border-dashed">
+                        <span className="text-slate-400 text-xs font-medium">室内/フロア</span>
+                      </div>
+                      {renderPartButton({ label: "右Rドア", partName: "リアドア（スライドドア）", className: "w-1/4 rounded-sm" })}
+                    </div>
+                    <div className="flex w-full gap-1.5 h-16">
+                      {renderPartButton({ label: "左クォーター", partName: "クォーターパネル", className: "w-1/4 rounded-bl-2xl rounded-tl-sm" })}
+                      {renderPartButton({ label: "バックドア", partName: "バックドア", className: "w-2/4 rounded-sm border-t-4 border-t-gray-400" })}
+                      {renderPartButton({ label: "右クォーター", partName: "クォーターパネル", className: "w-1/4 rounded-br-2xl rounded-tr-sm" })}
+                    </div>
+                    {renderPartButton({ label: "リヤバンパー", partName: "リヤバンパー", className: "w-[85%] rounded-b-[2rem] rounded-t-md" })}
+                  </div>
                 </div>
               </div>
-            </div>
 
             {/* 右カラム: チェックリスト群 */}
             <div className="lg:col-span-7">
